@@ -6,12 +6,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class EntryDatabase extends SQLiteOpenHelper {
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public void onCreate(SQLiteDatabase db) {
 
+        // create DB, For assigning current datestamp to date use: DATETIME DEFAULT CURRENT_TIMESTAMP
+        db.execSQL("CREATE TABLE entries (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, MOOD INTEGER, timestamp DATETIME)");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
     }
 
