@@ -1,6 +1,8 @@
 package nl.pellegroot.journal;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,8 +15,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
+        Cursor cursor = db.selectAll();
+        EntryAdapter entryAdapter = new EntryAdapter(this, R.id.LVmain,cursor);
     }
-
 
     public void addButtonClicked(View view){
 

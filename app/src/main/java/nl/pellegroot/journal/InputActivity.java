@@ -12,7 +12,8 @@ public class InputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_input);
     }
 
-    public void saveButtonClicked (View view){
-
+    public void addEntry (View view){
+//        EntryDatabase.getInstance()
+//        and call the insert method
     }
 }
