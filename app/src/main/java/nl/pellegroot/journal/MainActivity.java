@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
-        Cursor cursor = db.selectAll();
+        Cursor cursor = db.selectAll(db);
         EntryAdapter entryAdapter = new EntryAdapter(this, R.id.LVmain,cursor);
     }
 
