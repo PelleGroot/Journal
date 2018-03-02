@@ -2,7 +2,9 @@ package nl.pellegroot.journal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -13,7 +15,18 @@ public class InputActivity extends AppCompatActivity {
     }
 
     public void addEntry (View view){
-//        EntryDatabase.getInstance()
-//        and call the insert method
+        Log.d("onSave?", "addEntry: ");
+        EntryDatabase db = EntryDatabase.getInstance(this);
+        JournalEntry entry = new JournalEntry();
+
+        EditText title = (EditText) findViewById(R.id.putEntryTitle);
+        EditText content = (EditText) findViewById(R.id.putEntry);
+//        EditText mood = (EditText) findViewById(R.id.putEntryMood);
+        Log.d("title: ", "addEntry: " + title);
+
+        entry.setTitle(title.getText().toString());
+        entry.setContent(content.getText().toString());
+//        entry.setMood(mood.getText().toString());
+        db.insert(entry);
     }
 }

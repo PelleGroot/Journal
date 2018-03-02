@@ -11,7 +11,7 @@ public class JournalEntry implements Serializable{
         Timestamp timestamp;
 
     // constructor
-    public JournalEntry(int id, String title, String content, int mood, Timestamp timestamp) {
+    public JournalEntry() {
         this.id = id;
         this.title = title;
         this.content = content;

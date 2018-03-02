@@ -1,5 +1,6 @@
 package nl.pellegroot.journal;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,47 +10,57 @@ import android.util.Log;
 public class EntryDatabase extends SQLiteOpenHelper {
 
     public static final String dbName = "journalDB";
-    public static final int dbVersion = 2;
+    public static final int dbVersion = 3;
     private static EntryDatabase instance;
 
     public static EntryDatabase getInstance(Context context){
+        // check if the instance is empty, and create a new DB of the instance is
         if (instance == null){
-            Log.d("database", "getInstance: ");
             instance = new EntryDatabase(context, dbName, null, dbVersion);
         }
         return instance;
     }
 
+    //constructor of the EntryDatabase
     private EntryDatabase(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, dbName, factory, dbVersion);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // create DB
-        Log.d("database", "onCreate: ");
+        // create DB tables
         db.execSQL("CREATE TABLE entries (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, mood INTEGER, timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)");
+        // fill with a test entry
         db.execSQL("INSERT INTO entries (title, content, mood) VALUES ('Test', 'Testing', 2)");
     }
 
   @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-      Log.d("database", "onUpgrade: ");
+        // drop DB table and call the oncreate
         db.execSQL("DROP TABLE entries");
         onCreate(db);
     }
 
     public Cursor selectAll() {
-        Log.d("database", "SelectAll: ");
+        // select all the entries in the DB
         return this.getWritableDatabase().rawQuery("SELECT * FROM entries", null, null);
     }
 
-//    public insert(Entry){
+    public void insert(JournalEntry entry){
         // open a connection with the db
+        SQLiteDatabase db = getWritableDatabase();
+        Log.d("onSave", "insert: ");
         // create new ContentValues
+        ContentValues contentValues = new ContentValues();
+
         // use Put method to add values (title, content, mood)
+        contentValues.put("title", entry.getTitle());
+        contentValues.put("entry", entry.getContent());
+        contentValues.put("mood", entry.getMood());
+
         // call insert on DB (nullColumnHack may be null)
-//    }
+        db.insert("entries",null,contentValues);
+    }
 
 }
 

@@ -8,15 +8,6 @@
     tools:context="nl.pellegroot.journal.InputActivity">
 
     <EditText
-        android:id="@+id/putEntryDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="time"
-        android:text="Fill date" />
-
-    <EditText
         android:id="@+id/putEntryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
