@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,8 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
-        Cursor cursor = db.selectAll(db);
-        EntryAdapter entryAdapter = new EntryAdapter(this, R.id.LVmain,cursor);
+        ListView LV = (ListView) findViewById(R.id.LVmain);
+        Cursor cursor = db.selectAll();
+        EntryAdapter entryAdapter = new EntryAdapter(this, cursor);
+        LV.setAdapter(entryAdapter);
     }
 
     public void addButtonClicked(View view){
