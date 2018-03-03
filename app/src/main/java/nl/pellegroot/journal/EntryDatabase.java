@@ -61,10 +61,12 @@ public class EntryDatabase extends SQLiteOpenHelper {
         // call insert on DB (nullColumnHack may be null)
         db.insert("entries",null,contentValues);
     }
-    public void delete(long id){
+    public Cursor delete(long id){
         Log.d("in delete", "delete: " + id);
+        String SQL = String.format("DELETE FROM entries where _id = %d", id);
+        Log.d("in delete", "SQL: " + SQL);
         // delete the entry with the corresponding id
-        this.getWritableDatabase().rawQuery(String.format("DELETE FROM entries where _id = %d", id   ), null, null);
+        return this.getWritableDatabase().rawQuery(SQL, null, null);
     }
 
 }
