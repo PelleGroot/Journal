@@ -18,8 +18,6 @@ public class EntryAdapter extends ResourceCursorAdapter {
         String title = c.getString(c.getColumnIndex("title"));
         String timestamp = c.getString(c.getColumnIndex("timestamp"));
 
-        Log.d("entryAdapter", "bindView: " + title + " "+ timestamp);
-
         // get the view from the entry_row
         TextView entryDate = (TextView) view.findViewById(R.id.entryDate);
         TextView entryTitle = (TextView) view.findViewById(R.id.entryTitle);

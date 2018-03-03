@@ -49,17 +49,22 @@ public class EntryDatabase extends SQLiteOpenHelper {
     public void insert(JournalEntry entry){
         // open a connection with the db
         SQLiteDatabase db = getWritableDatabase();
-        Log.d("onSave", "insert: ");
+
         // create new ContentValues
         ContentValues contentValues = new ContentValues();
 
         // use Put method to add values (title, content, mood)
         contentValues.put("title", entry.getTitle());
-        contentValues.put("entry", entry.getContent());
+        contentValues.put("content", entry.getContent());
         contentValues.put("mood", entry.getMood());
 
         // call insert on DB (nullColumnHack may be null)
         db.insert("entries",null,contentValues);
+    }
+    public void delete(long id){
+        Log.d("in delete", "delete: " + id);
+        // delete the entry with the corresponding id
+        this.getWritableDatabase().rawQuery(String.format("DELETE FROM entries where _id = %d", id   ), null, null);
     }
 
 }
