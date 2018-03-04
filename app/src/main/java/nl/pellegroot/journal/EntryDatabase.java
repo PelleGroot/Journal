@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.Timestamp;
+
 public class EntryDatabase extends SQLiteOpenHelper {
 
     public static final String dbName = "journalDB";
-    public static final int dbVersion = 3;
+    public static final int dbVersion = 5;
     private static EntryDatabase instance;
 
     public static EntryDatabase getInstance(Context context){
@@ -61,12 +63,20 @@ public class EntryDatabase extends SQLiteOpenHelper {
         // call insert on DB (nullColumnHack may be null)
         db.insert("entries",null,contentValues);
     }
-    public Cursor delete(long id){
+    public void delete(long id){
         Log.d("in delete", "delete: " + id);
+        // create a query with the right id
         String SQL = String.format("DELETE FROM entries where _id = %d", id);
         Log.d("in delete", "SQL: " + SQL);
-        // delete the entry with the corresponding id
-        return this.getWritableDatabase().rawQuery(SQL, null, null);
+        // delete the entry using the query above
+        this.getWritableDatabase().rawQuery(SQL, null, null);
+    }
+
+    public String getDatetime(int id){
+        String SQL = String.format("SELECT timestamp FROM entries WHERE _id = " + id);
+        Cursor cursor = this.getWritableDatabase().rawQuery(SQL, null, null);
+        String datetime = cursor.getString(0);
+        return datetime;
     }
 
 }

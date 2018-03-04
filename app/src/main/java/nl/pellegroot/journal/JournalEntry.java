@@ -1,13 +1,14 @@
 package nl.pellegroot.journal;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 public class JournalEntry implements Serializable{
         int id;
         String title;
         String content;
-        int mood;
+        String mood;
         Timestamp timestamp;
 
     // constructor
@@ -44,11 +45,11 @@ public class JournalEntry implements Serializable{
         this.content = content;
     }
 
-    public int getMood() {
+    public String getMood() {
         return mood;
     }
 
-    public void setMood(int mood) {
+    public void setMood(String mood) {
         this.mood = mood;
     }
 

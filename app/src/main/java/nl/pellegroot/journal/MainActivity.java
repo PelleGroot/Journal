@@ -15,17 +15,33 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    // create private instances
+    private EntryDatabase entryDB;
+    private EntryAdapter entryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        EntryDatabase db = EntryDatabase.getInstance(getApplicationContext());
+        // connect to db
+        entryDB = EntryDatabase.getInstance(getApplicationContext());
+        // get all entries from db
+        Cursor cursor = entryDB.selectAll();
+        // set the  ListView
         ListView LV = (ListView) findViewById(R.id.LVmain);
-        Cursor cursor = db.selectAll();
-        EntryAdapter entryAdapter = new EntryAdapter(this, cursor);
+        // set the adapter
+        entryAdapter = new EntryAdapter(this, cursor);
         LV.setAdapter(entryAdapter);
+        //set the longClickListener
         LV.setOnItemLongClickListener(new ListViewLongClicked());
+        LV.setOnItemClickListener(new ListViewItemClick());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // update the view on resume
+        updateData();
     }
 
     public void addButtonClicked(View view){
@@ -35,22 +51,51 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class ListViewClicked implements AdapterView.OnItemClickListener {
+    private class ListViewItemClick implements AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            // find the entry which was clicked
+            JournalEntry clickedEntry = (JournalEntry) adapterView.getItemAtPosition(i);
+
+            // get the id of the entry that was clicked
+            Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
+            int id = cursor.getInt(0);
+
+            // send the clicked on to the new activity
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra("ClickedEntry", clickedEntry);
+            intent.putExtra("ClickedId", id);
+            startActivity(intent);
         }
     }
 
     private class ListViewLongClicked implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            // connect to db
+            entryDB = EntryDatabase.getInstance(getApplicationContext());
             Log.d("clicked? ", "onItemLongClick: ");
-            EntryDatabase entryDB = EntryDatabase.getInstance(getApplicationContext());
             Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
-            long id = cursor.getLong(0);
+            int id = cursor.getInt(0);
             Log.d("before delete", "onItemLongClick: " + id);
             entryDB.delete(id);
+            // update the view
+            updateData();
             return false;
         }
     }
+
+    private void updateData(){
+        Log.d("in", "updateData: ");
+        // connect to db
+        entryDB = EntryDatabase.getInstance(getApplicationContext());
+
+        // get updated data
+        Cursor newCursor = entryDB.selectAll();
+
+        // put the updated data into the adapter
+        entryAdapter.swapCursor(newCursor);
+    }
+
 }
