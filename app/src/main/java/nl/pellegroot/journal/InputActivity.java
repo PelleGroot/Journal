@@ -18,9 +18,9 @@ public class InputActivity extends AppCompatActivity {
         EntryDatabase entrydb = EntryDatabase.getInstance(this);
         JournalEntry entry = new JournalEntry();
 
-        EditText title = (EditText) findViewById(R.id.putEntryTitle);
-        EditText content = (EditText) findViewById(R.id.putEntry);
-        EditText mood = (EditText) findViewById(R.id.putEntryMood);
+        EditText title = findViewById(R.id.putEntryTitle);
+        EditText content = findViewById(R.id.putEntry);
+        EditText mood = findViewById(R.id.putEntryMood);
 
         entry.setTitle(title.getText().toString());
         entry.setContent(content.getText().toString());

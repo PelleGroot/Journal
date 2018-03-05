@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.sql.Timestamp;
+import java.util.Locale;
 
 public class EntryDatabase extends SQLiteOpenHelper {
 
@@ -66,18 +66,10 @@ public class EntryDatabase extends SQLiteOpenHelper {
     public void delete(long id){
         Log.d("in delete", "delete: " + id);
         // create a query with the right id
-        String SQL = String.format("DELETE FROM entries where _id = %d", id);
+        String SQL = String.format(Locale.getDefault(),"DELETE FROM entries where _id = %d", id);
         Log.d("in delete", "SQL: " + SQL);
         // delete the entry using the query above
-        this.getWritableDatabase().rawQuery(SQL, null, null);
+        this.getWritableDatabase().delete("entries", "_id = " + id,null);
     }
-
-    public String getDatetime(int id){
-        String SQL = String.format("SELECT timestamp FROM entries WHERE _id = " + id);
-        Cursor cursor = this.getWritableDatabase().rawQuery(SQL, null, null);
-        String datetime = cursor.getString(0);
-        return datetime;
-    }
-
 }
 

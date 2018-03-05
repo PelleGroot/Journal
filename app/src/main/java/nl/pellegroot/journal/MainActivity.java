@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         // get all entries from db
         Cursor cursor = entryDB.selectAll();
         // set the  ListView
-        ListView LV = (ListView) findViewById(R.id.LVmain);
+        ListView LV = findViewById(R.id.LVmain);
         // set the adapter
         entryAdapter = new EntryAdapter(this, cursor);
         LV.setAdapter(entryAdapter);
@@ -56,16 +57,20 @@ public class MainActivity extends AppCompatActivity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
             // find the entry which was clicked
-            JournalEntry clickedEntry = (JournalEntry) adapterView.getItemAtPosition(i);
-
-            // get the id of the entry that was clicked
             Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
-            int id = cursor.getInt(0);
+
+            // get data from db and put them in a journal entry
+            JournalEntry clickedEntry = new JournalEntry();
+
+            clickedEntry.setId(cursor.getInt(0));
+            clickedEntry.setTitle(cursor.getString(1));
+            clickedEntry.setContent(cursor.getString(2));
+            clickedEntry.setMood(cursor.getString(3));
+            clickedEntry.setTimestamp(Timestamp.valueOf(cursor.getString(4)));
 
             // send the clicked on to the new activity
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra("ClickedEntry", clickedEntry);
-            intent.putExtra("ClickedId", id);
             startActivity(intent);
         }
     }

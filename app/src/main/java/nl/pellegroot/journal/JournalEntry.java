@@ -1,7 +1,6 @@
 package nl.pellegroot.journal;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class JournalEntry implements Serializable{

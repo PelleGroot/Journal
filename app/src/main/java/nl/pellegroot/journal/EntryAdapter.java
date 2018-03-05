@@ -19,8 +19,8 @@ public class EntryAdapter extends ResourceCursorAdapter {
         String timestamp = c.getString(c.getColumnIndex("timestamp"));
 
         // get the view from the entry_row
-        TextView entryDate = (TextView) view.findViewById(R.id.entryDate);
-        TextView entryTitle = (TextView) view.findViewById(R.id.entryTitle);
+        TextView entryDate = view.findViewById(R.id.entryDate);
+        TextView entryTitle = view.findViewById(R.id.entryTitle);
 
         // set the text of the entry_row
         entryDate.setText(timestamp);

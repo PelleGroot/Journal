@@ -21,22 +21,23 @@ public class DetailActivity extends AppCompatActivity {
 
         // get clicked entry from the intent
         JournalEntry entry = (JournalEntry) intent.getSerializableExtra("ClickedEntry");
-        int id = intent.getIntExtra("ClickedId", 0);
 
         // set the views
-        TextView entryDateTime = (TextView) findViewById(R.id.getEntryDate);
-        TextView entryTitle = (TextView) findViewById(R.id.getEntryTitle);
-        TextView entryContent = (TextView) findViewById(R.id.getEntry);
-        TextView entryMood = (TextView) findViewById(R.id.getEmoji);
+        TextView entryDateTime = findViewById(R.id.getEntryDate);
+        TextView entryTitle = findViewById(R.id.getEntryTitle);
+        TextView entryContent = findViewById(R.id.getEntry);
+        TextView entryMood = findViewById(R.id.getEmoji);
 
         // get datetime from db
         EntryDatabase entryDB = EntryDatabase.getInstance(this);
-        String datetime = entryDB.getDatetime(id);
+
+        // format timestamp to string
+        String timestamp = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(entry.getTimestamp());
 
         // set values to the view
-        entryDateTime.setText(datetime);
+        entryDateTime.setText(timestamp);
         entryTitle.setText(entry.getTitle());
-        entryContent.setText(entry.getTitle());
+        entryContent.setText(entry.getContent());
         entryMood.setText(entry.getMood());
     }
 }
