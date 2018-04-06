@@ -11,33 +11,40 @@
         android:id="@+id/putEntryTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="@string/title" />
+        android:text="@string/title"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/putEntry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="30"
         android:ems="10"
         android:inputType="textMultiLine"
-        android:text="Entry" />
+        android:text="Entry"
+        android:textSize="20sp"/>
 
     <EditText
         android:id="@+id/putEntryMood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Mood" />
+        android:text="Mood"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/saveEntry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1"
         android:onClick="addEntry"
         android:text="@string/save" />
