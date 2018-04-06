@@ -80,10 +80,8 @@ public class MainActivity extends AppCompatActivity {
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
             // connect to db
             entryDB = EntryDatabase.getInstance(getApplicationContext());
-            Log.d("clicked? ", "onItemLongClick: ");
             Cursor cursor = (Cursor) adapterView.getItemAtPosition(i);
             int id = cursor.getInt(0);
-            Log.d("before delete", "onItemLongClick: " + id);
             entryDB.delete(id);
             // update the view
             updateData();
@@ -92,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateData(){
-        Log.d("in", "updateData: ");
         // connect to db
         entryDB = EntryDatabase.getInstance(getApplicationContext());
 

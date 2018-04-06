@@ -64,10 +64,8 @@ public class EntryDatabase extends SQLiteOpenHelper {
         db.insert("entries",null,contentValues);
     }
     public void delete(long id){
-        Log.d("in delete", "delete: " + id);
         // create a query with the right id
         String SQL = String.format(Locale.getDefault(),"DELETE FROM entries where _id = %d", id);
-        Log.d("in delete", "SQL: " + SQL);
         // delete the entry using the query above
         this.getWritableDatabase().delete("entries", "_id = " + id,null);
     }
